@@ -9,19 +9,19 @@ class Solution {
   public:
     int longestUniqueSubstr(string &s) {
         // code here
-        int n = s.size(), i = 0, j = 0, ans = 0;
-        vector<bool> freq(26, false);
-        while(j<n) {
-            int val = s[j]-'a';
-            while(freq[val]) {
-                freq[s[i]-'a'] = false;
-                i++;
-            }
-            ans = max(ans, j-i+1);
-            freq[val] = true;
-            j++;
+        unordered_map<char, int> mp;
+        int start =0, res =0;
+        
+        for(int i=0;i<s.length();i++){
+            if (mp.count(s[i]) > 0 && mp[s[i]] >= start) {
+            start = mp[s[i]] + 1; 
         }
-        return ans;
+        
+        mp[s[i]] = i; 
+        res = max(res, i - start + 1);
+        }
+        
+        return res;
     }
 };
 
