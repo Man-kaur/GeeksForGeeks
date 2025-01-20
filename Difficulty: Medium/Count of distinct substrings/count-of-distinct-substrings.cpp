@@ -22,28 +22,21 @@ cout << "~" << "\n";
 
 
 // } Driver Code Ends
-
-
-class TrieNode {
+class TrieNode{
 public:
     bool isWord;
     TrieNode* child[26];
-
-    TrieNode()
-    {
+    TrieNode(){
         isWord = 0;
-        for (int i = 0; i < 26; i++) {
+        for(int i=0; i<26; i++){
             child[i] = 0;
         }
     }
     
-    ~TrieNode() {
-        // Recursively delete all child nodes
-        for (int i = 0; i < 26; i++) {
-            if (child[i] != NULL) {
-                delete child[i];
-                child[i] = NULL;
-            }
+    ~TrieNode(){
+        for(int i=0;i<26;i++){
+            delete child[i];
+            // child[i] = NULL;
         }
     }
 };
@@ -73,38 +66,3 @@ int countDistinctSubstring(string str)
     delete head;
     return count+1;
 }
-
-// class TrieNode{
-//     public:
-//     bool isWord;
-//     TrieNode* alpha[26];
-    
-//     TrieNode(){
-//         isWord = 0;
-//         for(int i=0; i<26;i++){
-//             alpha[i] = 0;
-//         }
-//     }
-// };
-
-// int countDistinctSubstring(string s)
-// {
-//     //Your code here
-//     TrieNode* head = new TrieNode();
-//     int count = 1;
-    
-//     for(int i=0;i<s.length();i++){
-//         TrieNode* temp = head;
-        
-//         for(int j=i;j<s.length();j++){
-//             if(temp->alpha[s[j]-'a'] == NULL){
-//                 temp->alpha[s[j]-'a'] = new TrieNode();
-//                 temp->isWord = 1;
-//                 count++;
-//             }
-//             temp = temp->alpha[s[j]-'a'];
-//         }
-//     }
-    
-//     return count;
-// }
