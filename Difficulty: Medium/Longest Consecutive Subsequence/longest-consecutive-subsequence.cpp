@@ -7,18 +7,22 @@ using namespace std;
 // } Driver Code Ends
 class Solution {
   public:
-
     // Function to return length of longest subsequence of consecutive integers.
     int longestConsecutive(vector<int>& arr) {
         // Your code here
-        sort(arr.begin(), arr.end());
-        int res = 1;
-        int count = 1;
-        for(int i=1;i<arr.size();i++){
-            if(arr[i] == arr[i-1]) continue;
-            if(arr[i]==arr[i-1]+1) count++;
-            else count = 1;
-            res = max(res, count);
+        unordered_set<int> st(arr.begin(), arr.end());
+        int res = 0;
+        
+        for(int &i : arr){
+            if(st.count(i-1)==0){
+                int count = 0;  
+                int curr = i;
+                while(st.count(curr)){
+                    count++;
+                    curr++;
+                }
+                res = max(res, count);   
+            }
         }
         
         return res;
