@@ -8,15 +8,14 @@ class Solution {
   public:
     long subarrayXor(vector<int> &arr, int k) {
         // code here
-        map<int, int> mp;
-        int res = 0;
+        unordered_map<int, int> mp;
         
+        int res = 0, xo = 0;
         mp[0] = 1;
-        int xo = 0;
         
         for(int i: arr){
             xo ^= i;
-            if(mp.count(xo^k)) res += mp[xo^k];
+            if(mp.find(xo^k)!=mp.end()) res+=mp[xo^k];
             mp[xo]++;
         }
         
