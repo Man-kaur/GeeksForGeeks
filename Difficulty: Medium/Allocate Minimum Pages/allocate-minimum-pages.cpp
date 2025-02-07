@@ -10,39 +10,36 @@ class Solution {
   public:
   
     bool check(vector<int> arr, int mid, int k){
-        int count = 1, sum = 0;  
+        int count = 1, sum = 0;
         
-        for(int i=0; i<arr.size(); i++){
-            if(sum + arr[i] > mid){
+        for(int i: arr){
+            if(sum + i > mid){
                 count++;
-                sum = arr[i];
+                sum =  i;
                 if(count > k) return false;
             }else{
-                sum += arr[i];
+                sum += i;
             }
         }
         
         return true;
     }
-    
     int findPages(vector<int> &arr, int k) {
-        // code here
         
         if(arr.size() < k) return -1;
-        
-        int low = *max_element(arr.begin(), arr.end()); // minimum valid capacity
+        int low = *max_element(arr.begin(), arr.end());
         int high = accumulate(arr.begin(), arr.end(), 0);
         
         int res = high;
         
-        while(low <= high){
+        while(low<=high){
             int mid = low + (high-low)/2;
             
             if(check(arr, mid, k)){
                 res = mid;
-                high = mid - 1; //try for smaller max allocation
+                high = mid - 1;
             }else{
-                low = mid + 1;  //increase capacity
+                low = mid + 1;
             }
         }
         
