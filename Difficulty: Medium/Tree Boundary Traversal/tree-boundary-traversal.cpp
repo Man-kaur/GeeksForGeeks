@@ -4,20 +4,23 @@ using namespace std;
 #define MAX_HEIGHT 100000
 
 // Tree Node
-struct Node {
+class Node {
+  public:
     int data;
     Node* left;
     Node* right;
+
+    // Constructor to initialize a new node
+    Node(int val) {
+        data = val;
+        left = NULL;
+        right = NULL;
+    }
 };
 
 // Utility function to create a new Tree Node
 Node* newNode(int val) {
-    Node* temp = new Node;
-    temp->data = val;
-    temp->left = NULL;
-    temp->right = NULL;
-
-    return temp;
+    return new Node(val);
 }
 
 // Function to Build Tree
@@ -27,7 +30,7 @@ Node* buildTree(string str) {
         return NULL;
 
     // Creating vector of strings from input
-    // string after spliting by space
+    // string after splitting by space
     vector<string> ip;
 
     istringstream iss(str);
@@ -85,63 +88,65 @@ Node* buildTree(string str) {
 
 
 // } Driver Code Ends
-/* A binary tree Node
-struct Node
-{
+/*
+// Tree Node
+class Node {
+  public:
     int data;
-    Node* left, * right;
-}; */
+    Node* left;
+    Node* right;
+
+    // Constructor to initialize a new node
+    Node(int val) {
+        data = val;
+        left = NULL;
+        right = NULL;
+    }
+};
+*/
 
 class Solution {
   public:
-    void left(Node *root, vector<int> &res){
-        Node* curr = root->left;
-        while(curr){
-            if(!isLeaf(curr)) res.push_back(curr->data);
-            if(curr->left) curr=curr->left;
-            else curr=curr->right;
-        }
-    }
-    
-    void leaves(Node *root, vector<int> &res){
-        
-        if(isLeaf(root)) {
-            res.push_back(root->data);
-            return;
-        }
-        if(root->left) leaves(root->left, res);
-        if(root->right) leaves(root->right, res);
-    }
-    
-    void right(Node *root, vector<int> &res){
-        if(!root->right) return;
-        Node* curr = root->right;
-        vector<int> temp;
-        
-        while(curr){
-            if(!isLeaf(curr)) temp.push_back(curr->data);
-            if(curr->right) curr=curr->right;
-            else curr=curr->left;
-        }
-        
-        for(int i=temp.size()-1;i>=0;i--){
-            res.push_back(temp[i]);
-        }
-        
-    }
-    
     bool isLeaf(Node* root){
         if(!root->left && !root->right) return true;
         return false;
     }
     
+    void left(Node* root, vector<int> &res){
+        Node* curr = root->left;
+        
+        while(curr){
+            if(!isLeaf(curr)) res.push_back(curr->data);
+            if(curr->left) curr = curr->left;
+            else curr = curr->right;
+        }
+    }
+    
+    void leaves(Node* root, vector<int> &res){
+        if(!root) return;
+        if(isLeaf(root)) res.push_back(root->data);
+        
+        if(root->left) leaves(root->left, res);
+        if(root->right) leaves(root->right, res);
+    }
+    
+    void right(Node* root, vector<int> &res){
+        Node* curr = root->right;
+        vector<int> temp;
+        while(curr){
+            if(!isLeaf(curr)) temp.push_back(curr->data);
+            if(curr->right) curr = curr->right;
+            else curr = curr->left;
+        }
+        
+        for(int i = temp.size() - 1; i>=0; i--) res.push_back(temp[i]);
+    }
+    
     vector<int> boundaryTraversal(Node *root) {
-        
-        if(!root) return {};
-        
         vector<int> res;
+        
         if(!isLeaf(root)) res.push_back(root->data);
-        left(root, res);
+        left(root,res);
         leaves(root, res);
         right(root, res);
         
@@ -151,8 +156,7 @@ class Solution {
 
 //{ Driver Code Starts.
 
-/* Driver program to test size function*/
-
+/* Driver program to test size function */
 int main() {
     int t;
     string tc;
@@ -167,7 +171,11 @@ int main() {
         for (int i : res)
             cout << i << " ";
         cout << endl;
+
+        cout << "~"
+             << "\n";
     }
     return 0;
 }
+
 // } Driver Code Ends
