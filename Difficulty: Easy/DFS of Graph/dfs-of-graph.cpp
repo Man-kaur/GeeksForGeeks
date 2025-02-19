@@ -7,24 +7,28 @@ using namespace std;
 class Solution {
   public:
     // Function to return a list containing the DFS traversal of the graph.
-    void dfs(vector<bool> &vizz, vector<int> &res, vector<vector<int>> &adj, int root){
-        res.push_back(root);
-        vizz[root] = true;
+    
+    void dfs(int node, vector<int> &res, vector<bool> &viz, vector<vector<int>> &adj){
         
-        for(auto i: adj[root]){
-            if(vizz[i] == 0) dfs(vizz, res, adj, i);
+        viz[node] = true;
+        res.push_back(node);
+        
+        for(int i : adj[node]){
+            if(!viz[i]){
+                dfs(i, res, viz, adj);
+            }
         }
-        
     }
     
     vector<int> dfsOfGraph(vector<vector<int>>& adj) {
-        int n = adj.size();
-        vector<bool> vizz(n, false);
+        // Code here
         vector<int> res;
-        dfs(vizz, res, adj, 0);
+        vector<bool> viz(adj.size(), false);
+        
+        dfs(0, res, viz, adj);
+        
         return res;
     }
-    
 };
 
 //{ Driver Code Starts.
