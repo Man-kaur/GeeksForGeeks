@@ -15,12 +15,13 @@ class Solution {
         
         for(int i=0; i<n; i++){
             for(int j=1; j<=k; j++){
-                if(i-j>=0) dp[i] =  min(dp[i],dp[i-j] + abs(arr[i] - arr[i-j]));
+                if(i-j >= 0) dp[i] = min(dp[i], dp[i-j] + abs(arr[i] - arr[i-j]));
             }
         }
         
         return dp[n-1];
     }
+    
 };
 
 
