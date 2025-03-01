@@ -7,31 +7,26 @@ using namespace std;
 
 class Solution {
   public:
-  
-    int helper(vector<vector<int>> &arr, vector<vector<int>> &dp, int row, int lastTask){
-        if(row == 0){
-            int maxi = 0;
-            for(int i=0; i<3; i++){
-                if(i != lastTask) maxi = max(maxi, arr[row][i]);
-            }
-            return maxi;
-        }
-        if(dp[row][lastTask] != -1) return dp[row][lastTask];
-        int maxi = 0;
-        
-        for(int i=0; i<3; i++){
-            if(i != lastTask) {
-                int points = arr[row][i] + helper(arr, dp, row - 1, i);
-                maxi = max(maxi, points);
-            }
-        }
-        
-        return dp[row][lastTask] = maxi;
-    }
+
     int maximumPoints(vector<vector<int>>& arr) {
+        
         int n = arr.size();
-        vector<vector<int>> dp(n, vector<int>(4, -1));
-        return helper(arr, dp, n-1, 3);
+        vector<vector<int>> dp(n, vector<int>(4, 0));
+        
+        dp[0][0] = max(arr[0][1], arr[0][2]);
+        dp[0][1] = max(arr[0][0], arr[0][2]);
+        dp[0][2] = max(arr[0][1], arr[0][0]);
+        dp[0][3] = max(arr[0][0], max(arr[0][1], arr[0][2]));
+        
+        for(int day=1; day<n; day++){
+            for(int last=0; last<4; last++){
+                for(int cur=0; cur<3; cur++){
+                    if(cur != last) dp[day][last] = max(dp[day][last] , arr[day][cur] + dp[day-1][cur]); 
+                }
+            }
+        }
+        
+        return dp[n-1][3];
     }
 };
 
