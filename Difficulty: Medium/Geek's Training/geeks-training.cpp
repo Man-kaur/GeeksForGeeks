@@ -9,22 +9,18 @@ class Solution {
   public:
   
     int helper(vector<vector<int>> &arr, vector<vector<int>> &dp, int row, int lastTask){
-        
         if(row == 0){
             int maxi = 0;
-            
             for(int i=0; i<3; i++){
                 if(i != lastTask) maxi = max(maxi, arr[row][i]);
             }
-            
             return maxi;
         }
-        
         if(dp[row][lastTask] != -1) return dp[row][lastTask];
         int maxi = 0;
         
         for(int i=0; i<3; i++){
-            if( i != lastTask){
+            if(i != lastTask) {
                 int points = arr[row][i] + helper(arr, dp, row - 1, i);
                 maxi = max(maxi, points);
             }
@@ -33,11 +29,9 @@ class Solution {
         return dp[row][lastTask] = maxi;
     }
     int maximumPoints(vector<vector<int>>& arr) {
-        // Code here
-        int rows = arr.size();
-        vector<vector<int>> dp(rows, vector<int> (4, -1));
-        
-        return helper(arr, dp, rows-1, 3);
+        int n = arr.size();
+        vector<vector<int>> dp(n, vector<int>(4, -1));
+        return helper(arr, dp, n-1, 3);
     }
 };
 
